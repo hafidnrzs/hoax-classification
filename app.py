@@ -66,4 +66,6 @@ if st.button("Klasifikasikan"):
         st.error("Harap masukkan teks sebelum melakukan klasifikasi.")
 
 st.caption("--------")
-st.caption("ChatGPT can make mistakes. Check important info.")
+st.caption(
+    "Disclaimer: Jangan percaya prediksi ini 100%. Selalu coba mencari informasi lebih lanjut untuk memastikan kebenaran."
+)
