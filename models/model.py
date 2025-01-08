@@ -3,6 +3,7 @@ import re
 import string
 from nltk.corpus import stopwords
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+import os
 
 # Inisialisasi stop words dan stemmer
 stop_words = set(stopwords.words('indonesian'))
@@ -24,7 +25,7 @@ def preprocess_text(text):
     words = [stemmer.stem(word) for word in words]
     return ' '.join(words)
 
-def predict(input_text, model="multinomial_nb_model.txt", vectorizer="tfidf_vectorizer.pkl"):
+def predict(input_text, model_path="multinomial_nb_model.pkl", vectorizer_path="tfidf_vectorizer.pkl"):
     """
     Predict apakah input text adalah hoax atau tidak
 
@@ -36,6 +37,17 @@ def predict(input_text, model="multinomial_nb_model.txt", vectorizer="tfidf_vect
     Returns:
         str: "Hoax" atau "Tidak Hoax" berdasarkan prediksi
     """
+     # Get the directory path of the current file
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+
+    # Join the directory path with the filenames
+    model_path = os.path.join(dir_path, model_path)
+    vectorizer_path = os.path.join(dir_path, vectorizer_path)
+
+    # Load the model and vectorizer
+    model = load_model(model_path)
+    vectorizer = load_vectorizer(vectorizer_path)
+
     # Preprocess the input text
     processed_text = preprocess_text(input_text)
     
