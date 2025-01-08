@@ -3,3 +3,8 @@ pandas
 scikit-learn
 numpy
 matplotlib
+nltk
+Sastrawi
+joblib
+tqdm
+imblearn

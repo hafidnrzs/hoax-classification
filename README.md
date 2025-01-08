@@ -6,13 +6,19 @@ Project klasifikasi berita hoax bahasa Indonesia menggunakan machine learning. T
 
 ```
 hoax-classification
-├── app.py               # File utama aplikasi Streamlit
+├── app.py                       # File utama aplikasi Streamlit
 ├── models
-│   └── model.py         # Implementasi model klasifikasi
+│   ├── classification.ipynb     # Notebook untuk eksplorasi dan pelatihan model
+│   ├── data_preprocessed.csv    # Dataset yang sudah dipreproses
+│   ├── model.py                 # Implementasi model klasifikasi
+│   ├── multinomial_nb_model.pkl # Model yang sudah dilatih
+│   └── tfidf_vectorizer.pkl     # Vectorizer yang sudah dilatih
 ├── data
-│   └── dataset.csv      # Dataset training dan testing
-├── requirements.txt     # Dependency Python untuk proyek
-└── README.md            # Dokumentasi proyek
+│   ├── Data_latih.csv           # Dataset training
+│   ├── Data_uji.csv             # Dataset testing
+│   └── README.md                # Dokumentasi dataset
+├── requirements.txt             # Dependency Python untuk proyek
+└── README.md                    # Dokumentasi proyek
 ```
 
 ## Cara Install
@@ -20,7 +26,7 @@ hoax-classification
 1. Clone repository
 
 2. Install package yang dibutuhkan:
-   ```
+   ```sh
    pip install -r requirements.txt
    ```
 
@@ -28,8 +34,10 @@ hoax-classification
 
 Untuk menjalankan aplikasi Streamlit, jalankan perintah berikut:
 
-```
+```sh
 streamlit run app.py
 ```
 
 Buka browser dan masukkan URL `http://localhost:8501` untuk mengakses aplikasi.
+
+## Penjelasan Proses Machine Learning
