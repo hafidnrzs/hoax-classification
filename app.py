@@ -1,27 +1,69 @@
-from streamlit import st
-import pandas as pd
-from models.model import load_model, predict
-from utils.helpers import preprocess_input
+import streamlit as st
+from time import sleep
+from models.model import predict  # Mengimpor fungsi predict dari model.py di folder models
 
-# Load the classification model
-model = load_model()
+# Pengaturan halaman
+st.set_page_config(
+    page_title="Hoax Classification",
+    layout="centered",
+    page_icon=":red_car:"
+)
 
-# Set up the Streamlit interface
-st.title("Hoax Classification App")
-st.write("Enter the text you want to classify as hoax or not hoax:")
+st.title("Hoax Classification")
+st.write("Aplikasi ini membantu mengklasifikasikan apakah suatu teks mengandung hoax atau tidak.")
 
-# User input
-user_input = st.text_area("Input Text")
+# Input teks dari pengguna
+input_text = st.text_area("Masukkan teks untuk klasifikasi:", height=100)
 
-if st.button("Classify"):
-    if user_input:
-        # Preprocess the input
-        processed_input = preprocess_input(user_input)
-        
-        # Make prediction
-        prediction = predict(model, processed_input)
-        
-        # Display the result
-        st.write("Prediction:", "Hoax" if prediction == 1 else "Not Hoax")
+if st.button("Klasifikasikan"):
+    if input_text:
+        # Menampilkan progress bar
+        progress_bar = st.progress(0)
+        status_text = st.empty()
+        status_text.text("Sedang memproses...")
+
+        for percent in range(101):
+            sleep(0.03)
+            progress_bar.progress(percent)
+
+        status_text.text("Proses selesai!")
+
+        # Memanggil fungsi predict dari models/model.py
+        try:
+            result = predict(input_text)
+        except Exception as e:
+            st.error(f"Terjadi kesalahan: {e}")
+            result = None
+
+        # Menampilkan hasil klasifikasi
+        if result:
+            st.subheader("Hasil Klasifikasi:")
+            if result == "Hoax":
+                st.markdown(
+                    f"""
+                    <div style="color: white; background-color: red; font-size: 20px; border-radius: 12px; padding: 10px; text-align: center; width: fit-content;">
+                        <b>{result}</b>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )
+            else:
+                st.markdown(
+                    f"""
+                    <div style="color: white; background-color: green; font-size: 20px; border-radius: 12px; padding: 10px; text-align: center; width: fit-content;">
+                        <b>{result}</b>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )
+        else:
+            st.error("Tidak dapat mengklasifikasikan teks. Periksa input Anda.")
+
+        sleep(1)
+        progress_bar.empty()
+        status_text.empty()
     else:
-        st.write("Please enter some text to classify.")
+        st.error("Harap masukkan teks sebelum melakukan klasifikasi.")
+
+st.caption("--------")
+st.caption("ChatGPT can make mistakes. Check important info.")
