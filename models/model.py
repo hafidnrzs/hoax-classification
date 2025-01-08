@@ -24,7 +24,7 @@ def preprocess_text(text):
     words = [stemmer.stem(word) for word in words]
     return ' '.join(words)
 
-def predict(model="multinomial_nb_model.txt", vectorizer="tfidf_vectorizer.pkl", input_text):
+def predict(input_text, model="multinomial_nb_model.txt", vectorizer="tfidf_vectorizer.pkl"):
     """
     Predict apakah input text adalah hoax atau tidak
 
